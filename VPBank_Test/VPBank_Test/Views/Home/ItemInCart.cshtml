@@ -1,0 +1,77 @@
+﻿@using Common
+@{
+    ViewBag.Title = "Item in cart ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var CountItemInCart = SessionData.CurrentSession.TotalItemInCart.ToString() + MessageAlert.CountItemInCart;
+}
+
+<div id="divLoad" class="container">
+    <h2>Danh sách item</h2>
+    <div id="LoadItem">
+        <input id="last_index" value="1" />
+        @Html.Partial("~/Views/Home/_ItemList.cshtml")
+    </div>
+</div>
+<script>
+    $("#spCountItem").html('@CountItemInCart');
+
+    $("#LoadItem").scroll(function () {
+        if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight - 250) {
+            var last_index = $("#last_index").val()
+            var _s_html = getDataItemDB(last_index)
+            $("#LoadItem").append(_s_html);
+        }
+    });
+    function getDataItemDB(index) {
+        try {
+
+            var _s_html = "";
+            var last_index = parseInt(index) + 1;
+
+            if( last_index == '-1') {
+                return false;
+            }
+            $.ajax({
+                type: 'POST',
+                url: '/Home/AutoLoad',
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify({
+                    p_lastIndex: last_index, p_itemStatus:1
+                }),
+                async: false, cache: false, traditional: true,
+                success: function (data) {
+                    $("#last_index").val(data._lastpage);
+                    _s_html = data._html;
+                }
+            });
+            return _s_html;
+        } catch (ex) {
+            console.log(ex);
+        }
+    }
+    function addItemToCart(_id) {
+        $.ajax({
+            type: 'POST',
+            url: '/Home/AddItem',
+            contentType: "application/json;charset=utf-8",
+            data: JSON.stringify({
+                itemId: _id
+            }),
+            async: false, cache: false, traditional: true,
+            success: function (data) {
+                if (data.success >= 0) {
+                    alert(data.message);
+                    window.location = "/Home/ItemInCart";
+                }
+                else {
+                    alert(data.message);
+                    return false;
+                }
+            }
+        })
+    }
+
+</script>
+

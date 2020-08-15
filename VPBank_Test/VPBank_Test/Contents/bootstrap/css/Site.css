@@ -1,0 +1,54 @@
+﻿body {
+}
+#LoadItem {
+    max-height: 70vh;
+    overflow-y: scroll;
+}
+.panel {
+    margin-bottom: unset;
+    min-height: 30px;
+}
+
+.row {
+    width: 100%;
+}
+
+.circle {
+    width: 100px;
+    height: 100px;
+    padding: 50px;
+    color: gray;
+    -moz-border-radius: 100px;
+    -webkit-border-radius: 100px;
+    border-radius: 100px;
+    border: solid 1px gray;
+    font-size: 20px;
+    margin: auto;
+}
+
+.well {
+    background-color: unset;
+    border: unset;
+    -webkit-box-shadow: unset;
+}
+
+.dtHead {
+    border-bottom: solid 1px #dddddd;
+    min-height: 30px;
+    cursor: pointer;
+}
+
+#last_index {
+    display: none;
+}
+
+.red {
+    color: red;
+}
+
+.spanNumber {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

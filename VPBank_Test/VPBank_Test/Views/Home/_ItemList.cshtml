@@ -1,0 +1,48 @@
+﻿@using ObjectInfo
+@using Common
+@model List<ItemInfo>
+
+@if (Model.Count > 0)
+{
+    foreach (var item in Model)
+    {
+        var _Active = item.IsInCart == Convert.ToInt32(ItemStatus.InCart) ? "Active" : "";
+        <div class="panel panel-default ">
+            <div class="dtHead @_Active" data-toggle="collapse" data-target="#collapse_@item.STT" id="tdv_@item.STT" aria-expanded="true">
+                <span style="margin:5px">@item.Item_Code - @item.Item_Name</span>
+                @if (item.IsInCart == Convert.ToInt32(ItemStatus.Normal))
+                {
+                    <a onclick="addItemToCart(@item.Item_Id)" style="float:right;margin:5px"><i id="icon_@item.Item_Id" class="fa fa-plus-circle "></i></a>
+                }
+                else
+                {
+                    <a onclick="addItemToCart(@item.Item_Id)" style="float:right;margin:5px"><i id="icon_@item.Item_Id" class="fa fa-minus-circle red"></i></a>
+                }
+            </div>
+            <div id="collapse_@item.STT" class="panel-collapse collapse" aria-expanded="true">
+                <div class="row">
+                    <div class="center-block well" style="width: 240px;position:relative">
+                        <div class="circle"><span class="spanNumber">@item.STT</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+<script>
+    $('.dtHead Active').collapse();
+</script>
+
+@*<div class="panel panel-default">
+        <div class="dtHead" data-toggle="collapse" data-target="#collapse2">
+            <span style="margin:5px">Item 2</span>
+            <a onclick="alert('sdsdsds')" style="float:right;margin:5px"><i class="fa fa-plus-circle"></i></a>
+        </div>
+        <div id="collapse2" class="panel-collapse collapse ">
+            <div class="row">
+                <div class="center-block well" style="width: 240px">
+                    <div class="circle"><span>1</span></div>
+                </div>
+            </div>
+        </div>
+    </div>*@
